@@ -54,7 +54,22 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('services') }}">Services</a>
         </li>
-        
+        <li class="nav-item">
+          <a class="nav-link" href="blog.html">Blog</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="team.html">Team</a>
+            <a class="dropdown-item" href="team-single.html">Team Details</a>
+            <a class="dropdown-item" href="career.html">Career</a>
+            <a class="dropdown-item" href="career-single.html">Career Details</a>
+            <a class="dropdown-item" href="blog-single.html">Blog Details</a>
+            <a class="dropdown-item" href="pricing.html">Pricing</a></a>
+            <a class="dropdown-item" href="faqs.html">FAQ's</a>
+          </div>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
         </li>
@@ -101,7 +116,8 @@
             <input type="text" id="name" name="name" class="form-control mb-4 px-0" placeholder="Full name" required>
             <input type="text" id="name" name="name" class="form-control mb-4 px-0" placeholder="Email address" required>
             <input type="text" id="pos" name="pos" class="form-control mb-4 px-0" placeholder="Position" required>
-            <input type="url" name="url" id="url" placeholder="https://example.com" pattern="http://.*" class="form-control mb-4 px-0" required>
+            <input type="url" name="url" id="url" placeholder="https://example.com" pattern="http(s?)(:\/\/)((www.)?).*" class="form-control mb-4 px-0" required>
+            <input type="url" name="favicon" id="favicon" placeholder="https://example.com/favicon.ico" pattern="http(s?)(:\/\/)((www.)?).*" class="form-control mb-4 px-0" required>
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>
         </div>
@@ -153,7 +169,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-6 text-center text-md-left">
-          <p class="text-light mb-0">Copyright &copy; 2023 <a class="text-gradient-primary" href="https://themefisher.com">kolaSecured.com</a>
+          <p class="text-light mb-0">Copyright &copy; 2022 <a class="text-gradient-primary" href="https://themefisher.com">kolaSecured.com</a>
           </p>
         </div>
         <div class="col-md-6">
