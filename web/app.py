@@ -3,8 +3,11 @@ import sys
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Scanning Engine')
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Rating Engine')
 from rate import rating
-from main import check_xss, scan_sql_injection
+from main import check_xss, scan_sql_injection, get_all_forms
 import json
+import pickle as pk
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 
 
 app = Flask(__name__)
@@ -13,6 +16,23 @@ app = Flask(__name__)
 def home():
     return render_template('index1.html')
 
+def rfc_preproc(url):
+    if "https://" in url:
+        val = 1
+    elif "http://" in url:
+        val=0
+    x= str(get_all_forms(url))
+    df = [[len(x),1,1,val]]
+    df = pd.DataFrame(df)
+    return df
+
+def pre_scan_injection(URL):
+    if "=" in URL:
+        sqli = scan_sql_injection(URL)
+    else:
+        sqli = 0
+    return sqli
+
 @app.route('/kolaTest3.0', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
@@ -20,9 +40,17 @@ def index():
     else:
         URL = request.form['url']
         if URL:
-            ll = check_xss(URL)
-            sqli = scan_sql_injection(URL)
-            ratings = rating(ll[2], sqli)
+            kola_rfc = pk.load(open('kola_rfc.pickle', 'rb'))
+            test_cases = kola_rfc.predict(rfc_preproc(URL))
+            if test_cases[0] ==2:
+                ll = check_xss(URL)
+                sqli = pre_scan_injection(URL)
+            else:
+                ll = check_xss(URL)
+            try:
+                ratings = rating(ll[2], sqli)
+            except:
+                ratings = 5
             return render_template('test.html', web=URL, len= len(ll[0]), result=ll[0], jsonfile = json.dumps(ll[1]), vuln=ll[2], rat=ratings)
         else:
             return render_template('team-single.html')
