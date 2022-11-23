@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<h1 class="title", style="color:white">
+Test Website</h1>
+    
+
+    
+    <h2 class="subtitle", style="color:white">
+    </h2>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <form action="/" method="POST">
+            <div class = "form-group">
+            <label for="url", style="color:white">Enter URL</label>
+            <input type="text" name = "url" id="url">
+ 
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+{% endblock %}
