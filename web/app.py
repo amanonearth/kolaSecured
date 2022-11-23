@@ -2,8 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for
 import sys
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Scanning Engine')
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Rating Engine')
+sys.path.insert(0, '/Users/a-manonearth/Sites/ST/NFT Engine')
+
 from rate import rating
 from main import check_xss, scan_sql_injection, get_all_forms
+from nft import host_nft, generate_image
 import json
 import pickle as pk
 import pandas as pd
@@ -39,6 +42,7 @@ def index():
         return render_template('team-single.html')
     else:
         URL = request.form['url']
+        favicon = request.form['favicon']
         if URL:
             kola_rfc = pk.load(open('kola_rfc.pickle', 'rb'))
             test_cases = kola_rfc.predict(rfc_preproc(URL))
@@ -51,7 +55,10 @@ def index():
                 ratings = rating(ll[2], sqli)
             except:
                 ratings = 5
-            return render_template('test.html', web=URL, len= len(ll[0]), result=ll[0], jsonfile = json.dumps(ll[1]), vuln=ll[2], rat=ratings)
+            generate_image("background.png", favicon, ratings)
+            nft = host_nft("output.png")
+
+            return render_template('test.html', web=URL, len= len(ll[0]), nft_link = nft, result=ll[0], jsonfile = json.dumps(ll[1]), vuln=ll[2], rat=ratings)
         else:
             return render_template('team-single.html')
     
