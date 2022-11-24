@@ -5,6 +5,7 @@
   <a href="#usage">Usage</a> 
 </p>
 <img src="images/kola.png" alt="kolaSecured"></a>
+
 # Features
 
 - ML Model generates different test cases against endpoints of a website.
