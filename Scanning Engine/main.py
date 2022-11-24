@@ -2,6 +2,7 @@ import requests
 from pprint import pprint
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
+import json
 
 s = requests.Session()
 s.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"
@@ -34,6 +35,7 @@ def get_form_details(form):
     details["action"] = action
     details["method"] = method
     details["inputs"] = inputs
+    print(details)
     return details
 
 msz = ""
@@ -111,7 +113,9 @@ def scan_xss(url):
     
     ll.append(form_details)
     ll.append(is_vulnerable)
-    return ll
+    ll1 = json.dumps(ll[1])
+    return ll, ll1
+
 
 def check_xss(url):
     global ll
