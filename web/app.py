@@ -3,10 +3,12 @@ import sys
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Scanning Engine')
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Rating Engine')
 sys.path.insert(0, '/Users/a-manonearth/Sites/ST/NFT Engine')
+sys.path.insert(0, '/Users/a-manonearth/Sites/ST/Reporting Engine')
 
 from rate import rating
 from main import check_xss, scan_sql_injection, get_all_forms
 from nft import host_nft, generate_image
+from report import pdf_generation
 import json
 import pickle as pk
 import pandas as pd
@@ -47,11 +49,14 @@ def index():
             kola_rfc = pk.load(open('kola_rfc.pickle', 'rb'))
             test_cases = kola_rfc.predict(rfc_preproc(URL))
             if test_cases[0] ==2:
-                ll = check_xss(URL)
-                sqli = pre_scan_injection(URL)
+                ll, ll1 = check_xss(URL)
+                # ll1 = json.loads(ll1)
+                if len(URL.split("=")) != 1:
+                    sqli = pre_scan_injection(URL)
             else:
                 ll = check_xss(URL)
             try:
+                pdf_generation(ll1, URL)
                 ratings = rating(ll[2], sqli)
             except:
                 ratings = 5
